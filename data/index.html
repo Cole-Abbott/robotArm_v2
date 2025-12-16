@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>Smart Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Robot Control</h1>
+    </header>
+
+    <main>
+        <section>
+            <div class="controlBox">
+                <h2>Modes</h2>
+                <div id="Modes" >
+                    <button id="manualMode" title="off" style="background-color: #2EE59D" >Manual</button>
+                    <button id="trajMode" title="rainbow">Trajectory</button>
+                    <button id="uploadTraj" title="solid">Upload Trajectory</button>
+                    <input type="range" class="speedSlider" min="0" max="255" value="100" step="1">
+                </div>
+            </div>
+            <div class="controlBox">
+                <h2>Joint Controls</h2>
+                <div id="controlButtons">
+                    <div class="joint-row">
+                        <div class="joint-label">Joint 1</div>
+                        <input type="range" class="j1Slider" min="-1.57" max="1.57" value="0" step="0.01">
+                        <div class="joint-value" id="j1Value">0.00 rad (0°)</div>
+                    </div>
+                    <div class="joint-row">
+                        <div class="joint-label">Joint 2</div>
+                        <input type="range" class="j2Slider" min="-1.57" max="1.57" value="0" step="0.01">
+                        <div class="joint-value" id="j2Value">0.00 rad (0°)</div>
+                    </div>
+                    <div class="joint-row">
+                        <div class="joint-label">Joint 3</div>
+                        <input type="range" class="j3Slider" min="-1.57" max="1.57" value="0" step="0.01">
+                        <div class="joint-value" id="j3Value">0.00 rad (0°)</div>
+                    </div>
+                    <div class="joint-row">
+                        <div class="joint-label">Joint 4</div>
+                        <input type="range" class="j4Slider" min="-3.14" max="3.14" value="0" step="0.01">
+                        <div class="joint-value" id="j4Value">0.00 rad (0°)</div>
+                    </div>
+
+                    <button id="zeroJoints" title="Zero Joints">Zero Joints</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>2025 Cole Abbott</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
