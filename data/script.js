@@ -191,6 +191,8 @@ const jointFunction = () => {
 	var t2 = parseFloat(document.getElementsByClassName('j2Slider')[0].value);
 	var t3 = parseFloat(document.getElementsByClassName('j3Slider')[0].value);
 	var t4 = parseFloat(document.getElementsByClassName('j4Slider')[0].value);
+	var t5 = parseFloat(document.getElementsByClassName('j5Slider')[0].value);
+	var t6 = parseFloat(document.getElementsByClassName('j6Slider')[0].value);
 
 	updateJointReadouts();
 
@@ -199,6 +201,8 @@ const jointFunction = () => {
 		t2: t2,
 		t3: t3,
 		t4: t4,
+		t5: t5,
+		t6: t6,
 		type: 1
 	};
 
@@ -210,6 +214,8 @@ document.getElementsByClassName('j1Slider')[0].addEventListener('input', jointFu
 document.getElementsByClassName('j2Slider')[0].addEventListener('input', jointFunction);
 document.getElementsByClassName('j3Slider')[0].addEventListener('input', jointFunction);
 document.getElementsByClassName('j4Slider')[0].addEventListener('input', jointFunction);
+document.getElementsByClassName('j5Slider')[0].addEventListener('input', jointFunction);
+document.getElementsByClassName('j6Slider')[0].addEventListener('input', jointFunction);
 
 document.getElementById('zeroJoints').addEventListener('click', () => {
 	if (webSocketState == false) {
@@ -226,6 +232,7 @@ document.getElementById('zeroJoints').addEventListener('click', () => {
 	document.getElementsByClassName('j2Slider')[0].value = 0;
 	document.getElementsByClassName('j3Slider')[0].value = 0;
 	document.getElementsByClassName('j4Slider')[0].value = 0;
+	// joints 5 and 6 cannot be zeroed due to physical constraints
 	updateJointReadouts();
 });
 
@@ -236,6 +243,8 @@ function updateJointReadouts() {
 	const t2 = parseFloat(document.getElementsByClassName('j2Slider')[0].value);
 	const t3 = parseFloat(document.getElementsByClassName('j3Slider')[0].value);
 	const t4 = parseFloat(document.getElementsByClassName('j4Slider')[0].value);
+	const t5 = parseFloat(document.getElementsByClassName('j5Slider')[0].value);
+	const t6 = parseFloat(document.getElementsByClassName('j6Slider')[0].value);
 
 	const setText = (id, val) => {
 		const el = document.getElementById(id);
@@ -247,6 +256,8 @@ function updateJointReadouts() {
 	setText('j2Value', t2);
 	setText('j3Value', t3);
 	setText('j4Value', t4);
+	setText('j5Value', t5);
+	setText('j6Value', t6);
 }
 
 // initialize readouts on page load

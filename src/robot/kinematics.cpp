@@ -9,8 +9,8 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
 // SECTION: Global Variables
-MatrixXd Slist(6, 4);
-MatrixXd Blist(6, 4);
+MatrixXd Slist(6, 6);
+MatrixXd Blist(6, 6);
 MatrixXd M = MatrixXd::Identity(4, 4);
 
 // SECTION: Function Definitions
@@ -19,17 +19,17 @@ MatrixXd M = MatrixXd::Identity(4, 4);
 void kinematicsSetup()
 {
     // Define the joint screw axes in the space frame in mm
-    Slist << 0, 0, 0, 0,
-             0, -1, -1, 0,
-             -1, 0, 0, 1,
-             0, 85.9, 385.9, 0,
-             0, 0, 0, 30,
-             0, 0, 0, 0;
+    Slist << 0, 0, 0, 0, 0, -1,
+             0, -1, -1, 0, -1, 0,
+             -1, 0, 0, 1, 0, 0,
+             0, 85.9, 385.9, 0, 579.3, 0,
+             0, 0, 0, 30, 0, 648.9,
+             0, 0, 0, 0, 8.6, 34.8;
 
     // Define the home configuration (set M before computing Blist)
-    M(0, 3) = 0;     // x
-    M(1, 3) = 30;    // y
-    M(2, 3) = 555.9; // z
+    M(0, 3) = -15.25;     // x
+    M(1, 3) = 34.75;    // y
+    M(2, 3) = 703.9; // z
 
     // Compute body screw axes from space screws and home transform
     Blist = mr::Adjoint(mr::TransInv(M)) * Slist;

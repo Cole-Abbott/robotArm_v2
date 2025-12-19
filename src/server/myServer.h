@@ -10,7 +10,7 @@
 // #define PASSWORD "Keiko1818"
 
 
-void start_web_services(void (*callback)(float, float, float), void (*jointCallback)(float, float, float, float), void (*zeroCallback)());
+void start_web_services(void (*callback)(float, float, float), void (*jointCallback)(float, float, float, float, float, float), void (*zeroCallback)());
 uint8_t startSPIFFS();
 
 // Enum for message types

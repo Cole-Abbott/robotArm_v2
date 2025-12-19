@@ -14,7 +14,7 @@ AsyncWebSocket ws("/ws");
 void connect_wifi();
 void start_server();
 void (*posCallback)(float x, float y, float z);
-void (*jointCallback)(float t1, float t2, float t3, float t4);
+void (*jointCallback)(float t1, float t2, float t3, float t4, float t5, float t6);
 void (*zeroCallback)();
 
 // format bytes
@@ -100,7 +100,9 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len)
             float t2 = doc["t2"];
             float t3 = doc["t3"];
             float t4 = doc["t4"];
-            jointCallback(t1, t2, t3, t4);
+            float t5 = doc["t5"];
+            float t6 = doc["t6"];
+            jointCallback(t1, t2, t3, t4, t5, t6);
         }
         else if (msgType == ZERO)
         {
@@ -212,7 +214,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len)
      * @brief Connects to wifi and starts the server
      *
      */
-    void start_web_services(void (*callback)(float, float, float), void (*jCallback)(float, float, float, float), void (*zeroCallbackFunc)())
+    void start_web_services(void (*callback)(float, float, float), void (*jCallback)(float, float, float, float, float, float), void (*zeroCallbackFunc)())
     {
         connect_wifi();
         initWebSocket();

@@ -52,7 +52,10 @@ void setJoint1(float angle);
 void setJoint2(float angle);
 void setJoint3(float angle);
 void setJoint4(float angle);
+void setJoint5(float angle);
+void setJoint6(float angle);
 
 
 void setJoints(VectorXd thetalist);
 void zeroJoints(VectorXd &thetalist);
+bool reachedSetpoints();

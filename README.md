@@ -77,7 +77,7 @@ pio device monitor -b 115200
 ```
 - Joint JSON (type 1):
 ```json
-{"t1": <rad>, "t2": <rad>, "t3": <rad>, "t4": <rad>, "type": 1}
+{"t1": <rad>, "t2": <rad>, "t3": <rad>, "t4": <rad>, "t5": <rad>, "t6": <rad>, "type": 1}
 ```
 - Zero joints (type 2):
 ```json

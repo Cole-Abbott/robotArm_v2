@@ -19,7 +19,7 @@
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
-VectorXd thetalist(4);
+VectorXd thetalist(6);
 std::vector<VectorXd> trajectory;
 
 struct PositionCommand
@@ -31,6 +31,8 @@ struct PositionCommand
 
 PositionCommand initialPos;
 QueueHandle_t positionQueue = nullptr;
+
+bool zeroFlag = false;
 
 void controlTask(void *pvParameters);
 
@@ -45,18 +47,21 @@ void posCallback(float x, float y, float z)
   xQueueOverwrite(positionQueue, &cmd); // keep only the latest target
 }
 
-void jointCallback(float t1, float t2, float t3, float t4)
+void jointCallback(float t1, float t2, float t3, float t4, float t5, float t6)
 {
   thetalist(0) = t1;
   thetalist(1) = t2;
   thetalist(2) = t3;
   thetalist(3) = t4;
+  thetalist(4) = t5;
+  thetalist(5) = t6;
   setJoints(thetalist);
 }
 
 void zeroCallback()
 {
   zeroJoints(thetalist);
+  zeroFlag = true;
 }
 
 
@@ -69,7 +74,7 @@ void setup()
   Serial.println("Motor Setup Complete");
 
   kinematicsSetup();
-  thetalist << 0, 0, 0, 0; // assume inital joint angles are all 0
+  thetalist << 0, 0, 0, 0, 0, 0; // assume inital joint angles are all 0
   // thetalist << 0, -PI / 3, PI / 2, 0; // initial joint angles
 
   MatrixXd pos = forwardKinematics(thetalist);
@@ -113,6 +118,26 @@ void setup()
 
   start_web_services(posCallback, jointCallback, zeroCallback);
 
+  // Serial.println("Setup Complete");
+  // Serial.printf("Waiting for zeroing...\n");
+  // // Wait for zeroing before proceeding
+  // while (!zeroFlag)
+  // {
+  //   vTaskDelay(pdMS_TO_TICKS(100));
+  // }
+  // Serial.printf("Zeroing complete. moving to 0, PI/4, PI/4, 0.\n");
+  // thetalist(0) = 0.0;
+  // thetalist(1) = PI / 4;;
+  // thetalist(2) = PI / 4;;
+  // thetalist(3) = 0.0;
+  // thetalist(4) = 0.0;
+  // thetalist(5) = 0.0;
+  // setJoints(thetalist); 
+  // while (!reachedSetpoints)
+  // {
+  //   vTaskDelay(pdMS_TO_TICKS(10));
+  // }
+  // Serial.println("Initial Position Reached. Ready for commands.");
 }
 
 
