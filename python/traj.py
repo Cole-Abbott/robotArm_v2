@@ -4,12 +4,12 @@ import numpy as np
 # -----------------------------
 # Robot definition (yours)
 # -----------------------------
-Slist = np.array([[0,   0,      0,      0,  0,      1],
+Slist = np.array([[0,   0,      0,      0,  0,      -1],
                   [0,   -1,     -1,     0,  1,      0],
                   [-1,  0,      0,      1,  0,      0],
                   [0,   85.9,   385.9,  30, -579.3, 0],
-                  [0,   0,      0,      0,  0,      648.9],
-                  [0,   0,      0,      0,  8.6,    -25.3]])
+                  [0,   0,      0,      0,  0,      -648.9],
+                  [0,   0,      0,      0,  8.6,    25.3]])
 
 M = np.array([[1, 0, 0, 15.25],
               [0, 1, 0, 25.75],
@@ -50,33 +50,35 @@ def IK_space(T, theta_init):
 # -----------------------------
 
 # Home configuration
-theta_home = np.ones(6) / -10 # small angles near zero
+theta_home = np.ones(6) / 10 # small angles near zero
 T_home = mr.FKinSpace(M, Slist, theta_home)
 
 # Pick pose (example)
 T_pick = np.array([
-    [-1, 0, 0, 300],
+    [-1, 0, 0, -350],
     [0, 1, 0, 0],
-    [0, 0, -1, 100],
+    [0, 0, -1, 50],
     [0, 0, 0, 1]
 ])
-# T_pick = np.array([
-#     [0, 0, 1, 400],
-#     [0, -1, 0, 0],
-#     [1, 0, -1, 100],
+
+T_place = np.array([
+    [-1, 0, 0, -350],
+    [0, 1, 0, 50],
+    [0, 0, -1, 50],
+    [0, 0, 0, 1]
+])
+
+
+# Place pose (example)
+# T_place = np.array([
+#     [0, 1, 0, 0],
+#     [1, 0, 0, -350],
+#     [0, 0, -1, 100],
 #     [0, 0, 0, 1]
 # ])
 
-# Place pose (example)
-T_place = np.array([
-    [0, 1, 0, 0],
-    [1, 0, 0, -350],
-    [0, 0, -1, 100],
-    [0, 0, 0, 1]
-])
-
 # Approach offset (hover above object)
-hover_height = 100  # mm
+hover_height = 20  # mm
 
 def hover_pose(T):
     T_hover = T.copy()
@@ -87,8 +89,8 @@ def hover_pose(T):
 # -----------------------------
 # Generate Cartesian trajectories
 # -----------------------------
-Tf = 3.0          # seconds
-N = 100           # trajectory points
+Tf = 2.0          # seconds
+N = 50           # trajectory points
 method = 5        # quintic time scaling
 
 traj = []

@@ -263,7 +263,7 @@ void setJoint5(float angle) {
 
 
 void setJoint6(float angle) {
-    angle += PI / 2; // adjust for servo mounting angle
+    angle += PI / 2 + 0.1; // adjust for servo mounting angle
     // map without using the map function bc its for integers and angle is a float
     int us = angle / PI * PULSE_WIDTH_RANGE + MIN_PULSE_WIDTH;
     if (us < MIN_PULSE_WIDTH) 
