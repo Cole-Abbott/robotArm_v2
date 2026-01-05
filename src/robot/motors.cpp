@@ -74,8 +74,8 @@ void setupMotors()
     stepper_1.setAcceleration(3000);
     stepper_2.setMaxSpeed(5000);
     stepper_2.setAcceleration(3000);
-    stepper_3.setMaxSpeed(2000);
-    stepper_3.setAcceleration(1000);
+    stepper_3.setMaxSpeed(1500);
+    stepper_3.setAcceleration(500);
      
     // Start the motor control task (DC motor PID & housekeeping)
     xTaskCreate(motorControl,    // The task function

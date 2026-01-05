@@ -41,7 +41,7 @@ using Eigen::VectorXd;
 
 #define JOINT_1_STEPS_PER_REV 32000 // 200 * 16 * 10 200 steps per rev 16x microstepping, 10x gear ratio
 #define JOINT_2_STEPS_PER_REV 69688.8888889 // 200 * 16 * 4.666 * 4.666, 200 steps per rev 16x microstepping, 2x 4.66 planetary gearboxes
-#define JOINT_3_STEPS_PER_REV 32000 // 38 * 16 * 5, 48 steps per rev 16x microstepping, 25/3 internal gear ratio, 5:1 external gear ratio
+#define JOINT_3_STEPS_PER_REV 64000 // 38 * 32 * 5, 48 steps per rev 32x microstepping, 25/3 internal gear ratio, 5:1 external gear ratio
 
 // #define JOINTLIMITS  {{ -2 * PI, 2 * PI }, { 0, 2 }, { PI / 2, PI } }// Joint limits for the robot
 

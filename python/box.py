@@ -6,7 +6,7 @@ import numpy as np
 # -----------------------------
 Slist = np.array([[0,   0,      0,      0,  0,      -1],
                   [0,   -1,     -1,     0,  1,      0],
-                  [-1,  0,      0,      1,  0,      0],
+                  [1,  0,      0,      1,  0,      0],
                   [0,   85.9,   385.9,  30, -579.3, 0],
                   [0,   0,      0,      0,  0,      -648.9],
                   [0,   0,      0,      0,  8.6,    25.3]])
@@ -54,28 +54,27 @@ theta_home = np.ones(6) / 10 # small angles near zero
 T_home = mr.FKinSpace(M, Slist, theta_home)
 
 # Pick pose (example)
-T_pick = np.array([
+T_start = np.array([
     [-1, 0, 0, -350],
     [0, 1, 0, 0],
-    [0, 0, -1, 50],
+    [0, 0, -1, 67],
     [0, 0, 0, 1]
 ])
 
-T_place = np.array([
-    [-1, 0, 0, -350],
-    [0, 1, 0, 50],
-    [0, 0, -1, 50],
-    [0, 0, 0, 1]
-])
+L = -100 # mm box size
+z_offset = -16 #mm on the left side
 
+T_1 = T_start.copy()
+T_1[0:3, 3] += np.array([L, 0, 0])  # Move in L,0
 
-# Place pose (example)
-# T_place = np.array([
-#     [0, 1, 0, 0],
-#     [1, 0, 0, -350],
-#     [0, 0, -1, 100],
-#     [0, 0, 0, 1]
-# ])
+T_2 = T_start.copy()
+T_2[0:3, 3] += np.array([L, L, z_offset // 2])  # Move in L,L
+T_3 = T_start.copy()
+T_3[0:3, 3] += np.array([0, L, z_offset])  # Move in 0,L
+
+T_4 = T_start.copy() # back to start, 0,0
+T_4[0:3, 3] += np.array([0, 0, z_offset])  # Move in 0,0,z_offset
+
 
 # Approach offset (hover above object)
 hover_height = 20  # mm
@@ -97,32 +96,29 @@ traj = []
 
 # Home → hover above pick
 traj += mr.CartesianTrajectory(
-    T_home, hover_pose(T_pick), Tf, N, method
+    T_home, hover_pose(T_start), Tf, N, method
 )
 
-# Hover → pick
+# Hover → start
 traj += mr.CartesianTrajectory(
-    hover_pose(T_pick), T_pick, Tf/2, N//2, method
+    hover_pose(T_start), T_start, Tf/2, N//2, method
 )
 
-# Pick → hover (object grasped)
+# Start → box corners
 traj += mr.CartesianTrajectory(
-    T_pick, hover_pose(T_pick), Tf/2, N//2, method
+    T_start, T_1, Tf, N, method
 )
-
-# Hover pick → hover place
 traj += mr.CartesianTrajectory(
-    hover_pose(T_pick), hover_pose(T_place), Tf, N, method
+    T_1, T_2, Tf, N, method
 )
-
-# Hover → place
 traj += mr.CartesianTrajectory(
-    hover_pose(T_place), T_place, Tf/2, N//2, method
+    T_2, T_3, Tf, N, method
 )
-
-# Place → hover
 traj += mr.CartesianTrajectory(
-    T_place, hover_pose(T_place), Tf/2, N//2, method
+    T_3, T_4, Tf, N, method
+)  
+traj += mr.CartesianTrajectory(
+    T_4, hover_pose(T_4), Tf/2, N//2, method
 )
 
 # -----------------------------
